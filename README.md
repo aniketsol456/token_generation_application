@@ -1,16 +1,5 @@
 # token_generation_application
 
-A new Flutter project.
+This project is helping to bank management system and also students and other consumer it's generate a token for bank consumers and giving to admin for approval and it's also for specific time duration generating a token.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Repository Link = https://github.com/aniketsol456/token_generation_application
