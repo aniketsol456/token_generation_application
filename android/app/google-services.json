@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984442762613",
+    "project_id": "token-generate-d3526",
+    "storage_bucket": "token-generate-d3526.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984442762613:android:e18d326c884262de0f0f3c",
+        "android_client_info": {
+          "package_name": "com.example.token_generation_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9cMyOjioDXSjQyHQcjdsLa0nshpOrK5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
