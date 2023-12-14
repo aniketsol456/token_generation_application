@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:token_generation_application/token_status.dart';
+// import 'package:token_generation_application/token_status.dart';
 import 'package:token_generation_application/user_screen/book_token_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
 import 'package:token_generation_application/user_screen/profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+class AdminHomeScreen extends StatefulWidget {
+  AdminHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<void> _showLogoutConfirmationDialog() async {
     return showDialog(
@@ -107,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   ),
             //   onTap: () {
             //     Navigator.push(
+
             //       context,
             //       MaterialPageRoute(
             //         builder: (context) => BottomNavScreen(),
@@ -205,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          ' Generate \n   Token',
+                          ' Token \n Status',
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.blue,

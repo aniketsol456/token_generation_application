@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:token_generation_application/admin_screen/admin_home_screen.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/signup_screen.dart';
 
@@ -38,7 +40,12 @@ class _LoginScreenState extends State<LoginScreen> {
       passerrortext =
           (Passcontroller.text.isEmpty) ? "Please enter a Password" : null;
     });
-    if (numerrortext == null && passerrortext == null) {
+    if (Numcontroller.text == '9104525299' &&
+        Passcontroller.text == 'admin_123') {
+      Get.off(
+        AdminHomeScreen(),
+      );
+    } else if (numerrortext == null && passerrortext == null) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
