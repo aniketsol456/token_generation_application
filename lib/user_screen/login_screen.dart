@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:token_generation_application/Screen/home_screen.dart';
-import 'package:token_generation_application/Screen/signup_screen.dart';
+import 'package:token_generation_application/user_screen/home_screen.dart';
+import 'package:token_generation_application/user_screen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

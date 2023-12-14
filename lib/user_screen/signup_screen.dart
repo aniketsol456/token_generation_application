@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:token_generation_application/Screen/home_screen.dart';
+import 'package:token_generation_application/user_screen/home_screen.dart';
+import 'package:token_generation_application/user_screen/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -29,6 +30,12 @@ class _SignupScreenState extends State<SignupScreen> {
       _isValidPassword = _password.isNotEmpty && _password.length >= 8;
       _isValidConfirmPassword =
           _confirmPassword == _password && _confirmPassword.isNotEmpty;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
     });
   }
 
@@ -51,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen(),
+                builder: (context) => LoginScreen(),
               ),
             );
           },
@@ -62,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
       body: Center(
         child: Container(
           width: 300,
-          height: 550,
+          height: 350,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
