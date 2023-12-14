@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
 
@@ -55,11 +56,8 @@ class _SignupScreenState extends State<SignupScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(),
-              ),
+            Get.off(
+              LoginScreen(),
             );
           },
           icon: Icon(Icons.arrow_back),
