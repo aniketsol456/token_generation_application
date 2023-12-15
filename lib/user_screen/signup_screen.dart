@@ -1,16 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
+import 'package:token_generation_application/user_screen/otp_screen.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  const SignupScreen({Key? key}) : super(key: key);
+  static String verify = "";
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  TextEditingController countrycode = TextEditingController();
   bool _showPassword = true;
 
   String _fullName = '';
@@ -38,6 +42,26 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       );
     });
+  }
+
+  void initstate() {
+    countrycode.text = "+91";
+    super.initState();
+  }
+
+  void submitform() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '${countrycode.text + _phoneNumber}',
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        SignupScreen.verify = verificationId;
+        Get.to(
+          OtpScreen(),
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
 
   void ToshowPassword() {
@@ -211,14 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ),
-                    );
-                  },
+                  onPressed: submitform,
                   child: Text(
                     'Continue',
                     style: TextStyle(

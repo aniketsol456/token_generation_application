@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
+import 'package:token_generation_application/user_screen/signup_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   @override
@@ -9,29 +11,27 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  // String code = " ";
+  String code = " ";
 
-  // final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-  // void TosignupScreen() async {
-  //   try {
-  //     // Create a PhoneAuthCredential with the code
-  //     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //         verificationId: SignupScreen.verify, smsCode: code);
+  void TosignupScreen() async {
+    try {
+      // Create a PhoneAuthCredential with the code
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: SignupScreen.verify, smsCode: code);
 
-  //     // Sign the user in (or link) with the credential
-  //     await auth.signInWithCredential(credential);
-
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => SignupScreento(),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     print('This is not a proper otp:$e');
-  //   }
-  // }
+      // Sign the user in (or link) with the credential
+      await auth.signInWithCredential(credential);
+      Get.off(
+        HomeScreen(),
+        curve: Curves.bounceIn,
+        duration: Duration(seconds: 2),
+      );
+    } catch (e) {
+      print('This is not a proper otp:$e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _OtpScreenState extends State<OtpScreen> {
       body: Center(
         child: Container(
           width: 325,
-          height: 350,
+          height: 250,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
@@ -86,6 +86,17 @@ class _OtpScreenState extends State<OtpScreen> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
+                Text(
+                  'Enter a One time \n      password',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Pinput(
                   length: 6,
                   showCursor: true,
