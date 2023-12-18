@@ -206,7 +206,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          ' Token \n Status',
+                          ' Token \n Detail',
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.blue,
