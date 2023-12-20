@@ -23,12 +23,12 @@ class FirebaseOperations {
     return resp;
   }
 
-  static Stream<QuerySnapshot> fetchTransactions() {
+  static Stream<QuerySnapshot> fetchdata() {
     CollectionReference User = db.collection("transactions");
     return User.snapshots();
   }
 
-  static deleteTranscation(String id) {
+  static deletedata(String id) {
     String resp = '';
     DocumentReference docRef = db.collection("transactions").doc(id);
     docRef.delete().whenComplete(() {

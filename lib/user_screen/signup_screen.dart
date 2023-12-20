@@ -59,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void submitform() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '${countrycode.text + _phoneNumber}',
+      phoneNumber: '+91 ${_phoneNumber}',
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {

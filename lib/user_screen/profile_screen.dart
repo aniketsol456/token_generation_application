@@ -8,8 +8,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late String firstName = '';
-  late String lastName = '';
+  TextEditingController fullname = TextEditingController();
+  TextEditingController accountnum = TextEditingController();
+  TextEditingController phonenum = TextEditingController();
+  late String fullName = '';
+  late String accoutnumber = '';
   late String phoneNumber = '';
 
   @override
@@ -42,6 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
+                        controller: fullname,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Full Name',
@@ -61,9 +65,33 @@ class _ProfilePageState extends State<ProfilePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
+                        controller: phonenum,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Phone number',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: accountnum,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Account Number',
                         ),
                       ),
                     ),

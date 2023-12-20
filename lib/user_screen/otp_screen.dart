@@ -100,9 +100,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 Pinput(
                   length: 6,
                   showCursor: true,
-                  // onChanged: (value) {
-                  //   code = value;
-                  // },
+                  onChanged: (value) {
+                    code = value;
+                  },
                 ),
                 SizedBox(
                   height: 20,
@@ -114,11 +114,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
-                    Get.off(
-                      HomeScreen(),
-                    );
-                  },
+                  onPressed: TosignupScreen,
                   child: Text(
                     'Verify your otp',
                     style: TextStyle(
