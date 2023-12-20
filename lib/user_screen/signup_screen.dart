@@ -40,11 +40,10 @@ class _SignupScreenState extends State<SignupScreen> {
       _isValidPassword = _password.isNotEmpty && _password.length >= 8;
       _isValidConfirmPassword =
           _confirmPassword == _password && _confirmPassword.isNotEmpty;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
+      Get.off(
+        HomeScreen(),
+        curve: Curves.easeInCubic,
+        duration: Duration(seconds: 2),
       );
     });
   }
