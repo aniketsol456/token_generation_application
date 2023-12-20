@@ -8,10 +8,10 @@ class FirebaseOperations {
       String fullname, String mobileno, String Password, String Accoutno) {
     String resp = '';
     final User = <String, dynamic>{
+      "Password": Password,
       "Fullname": fullname,
       "Mobileno": mobileno,
       "Accountno": Accoutno,
-      "Password": Password,
       "tr_dt": DateTime.now().toString(),
     };
     db.collection("Users").add(User).whenComplete(() {

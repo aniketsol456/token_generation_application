@@ -16,6 +16,10 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   TextEditingController countrycode = TextEditingController();
+  TextEditingController fullname = TextEditingController();
+  TextEditingController phonenum = TextEditingController();
+  TextEditingController accountnum = TextEditingController();
+  TextEditingController pass = TextEditingController();
   bool _showPassword = true;
 
   String _fullName = '';
@@ -66,7 +70,12 @@ class _SignupScreenState extends State<SignupScreen> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
-    FirebaseOperations.addData("fygvhbv", "jyfhvv", "ghvbvv", "adsfad");
+    FirebaseOperations.addData(
+      fullname.text,
+      phonenum.text,
+      pass.text,
+      accountnum.text,
+    );
   }
 
   void ToshowPassword() {
@@ -128,6 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
+                    controller: fullname,
                     decoration: InputDecoration(
                       labelText: 'Full name',
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -153,14 +163,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
-                    //controller: controller.phone,
+                    controller: phonenum,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       labelText: 'Enter a Mobile No.',
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       errorText: !_isValidPhoneNumber
-                          ? 'Please enter valid Mobilename'
+                          ? 'Please enter valid Mobileno'
                           : null,
                     ),
                     onChanged: (value) {
@@ -180,7 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
-                    //controller: controller.phone,
+                    controller: accountnum,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -207,6 +217,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextField(
+                    controller: pass,
                     obscureText: _showPassword,
                     decoration: InputDecoration(
                       border: InputBorder.none,
