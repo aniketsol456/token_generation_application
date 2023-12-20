@@ -20,11 +20,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   String _fullName = '';
   String _phoneNumber = '';
+  String _accountnumber = '';
   String _password = '';
   String _confirmPassword = '';
 
   bool _isValidFullName = true;
   bool _isValidPhoneNumber = true;
+  bool _isValidaccountnumber = true;
   bool _isValidPassword = true;
   bool _isValidConfirmPassword = true;
 
@@ -33,6 +35,8 @@ class _SignupScreenState extends State<SignupScreen> {
       _isValidFullName = _fullName.isNotEmpty;
       _isValidPhoneNumber =
           _phoneNumber.isNotEmpty && _phoneNumber.length == 10;
+      _isValidaccountnumber =
+          _accountnumber.isNotEmpty && _accountnumber.length == 15;
       _isValidPassword = _password.isNotEmpty && _password.length >= 8;
       _isValidConfirmPassword =
           _confirmPassword == _password && _confirmPassword.isNotEmpty;
@@ -63,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
-    FirebaseOperations.addData("fygvhbv", "jyfhvv", "ghvbvv");
+    FirebaseOperations.addData("fygvhbv", "jyfhvv", "ghvbvv", "adsfad");
   }
 
   void ToshowPassword() {
@@ -93,7 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
       body: Center(
         child: Container(
           width: 300,
-          height: 350,
+          height: 400,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
@@ -162,6 +166,33 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     onChanged: (value) {
                       _phoneNumber = value;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    //controller: controller.phone,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Enter a Account No.',
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      errorText: !_isValidPhoneNumber
+                          ? 'Please enter valid Account No.'
+                          : null,
+                    ),
+                    onChanged: (value) {
+                      _accountnumber = value;
                     },
                   ),
                 ),

@@ -4,18 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 var db = FirebaseFirestore.instance;
 
 class FirebaseOperations {
-  static addData(
-      String fullname, String mobileno, String Password, String Accoutno) {
+  static tokendetail(String description) {
     String resp = '';
-    final User = <String, dynamic>{
-      "Fullname": fullname,
-      "Mobileno": mobileno,
-      "Accountno": Accoutno,
-      "Password": Password,
+    final token = <String, dynamic>{
+      "Description": description,
       "tr_dt": DateTime.now().toString(),
     };
-    db.collection("Users").add(User).whenComplete(() {
-      resp = 'Users added successfully';
+    db.collection("TokenDetails").add(token).whenComplete(() {
+      resp = 'Users token added successfully';
     });
     //     .catchError((e) {
     //   resp = e.toString();
@@ -24,15 +20,15 @@ class FirebaseOperations {
   }
 
   static Stream<QuerySnapshot> fetchTransactions() {
-    CollectionReference User = db.collection("transactions");
-    return User.snapshots();
+    CollectionReference token = db.collection("transactions");
+    return token.snapshots();
   }
 
   static deleteTranscation(String id) {
     String resp = '';
     DocumentReference docRef = db.collection("transactions").doc(id);
     docRef.delete().whenComplete(() {
-      resp = 'Userdata deleted successfully';
+      resp = 'Token deleted successfully';
     });
     return resp;
   }

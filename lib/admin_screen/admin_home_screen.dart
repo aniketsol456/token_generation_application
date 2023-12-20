@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:token_generation_application/admin_screen/admin_token_detail.dart';
-// import 'package:token_generation_application/token_status.dart';
-import 'package:token_generation_application/user_screen/book_token_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
 import 'package:token_generation_application/user_screen/profile_screen.dart';
+// import 'package:token_generation_application/token_status.dart';
+// import 'package:token_generation_application/user_screen/book_token_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   AdminHomeScreen({super.key});
