@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:token_generation_application/services/firbase_option.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
 import 'package:token_generation_application/user_screen/otp_screen.dart';
@@ -62,6 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
+    FirebaseOperations.addData("fygvhbv", "jyfhvv", "ghvbvv");
   }
 
   void ToshowPassword() {
