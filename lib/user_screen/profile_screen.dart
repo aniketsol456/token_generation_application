@@ -1,21 +1,66 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-
+  // const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  TextEditingController fullname = TextEditingController();
-  TextEditingController accountnum = TextEditingController();
-  TextEditingController phonenum = TextEditingController();
-  late String fullName = '';
-  late String accoutnumber = '';
-  late String phoneNumber = '';
+  // TextEditingController fullname = TextEditingController();
+  // TextEditingController accountnum = TextEditingController();
+  // TextEditingController phonenum = TextEditingController();
+  late TextEditingController fullname;
+  late TextEditingController accountnum;
+  late TextEditingController phonenum;
+  // late String fullName = '';
+  // late String accoutnumber = '';
+  // late String phoneNumber = '';
 
   @override
+  void initState() {
+    super.initState();
+    fullname = TextEditingController();
+    accountnum = TextEditingController();
+    phonenum = TextEditingController();
+    fetchProfileData(); // Fetch data when the page initializes
+  }
+
+  void fetchProfileData() async {
+    try {
+      // Access Firestore collection 'profiles' and document with specific ID
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('Users')
+          .doc('xPdpuq1Loo8kgY95Triy')
+          .get();
+
+      if (snapshot.exists) {
+        // Access data from the snapshot and set it to the respective TextFields
+        setState(() {
+          fullname.text = snapshot.get('fullName') ??
+              ''; // Setting retrieved data to the TextField
+          accountnum.text = snapshot.get('accountNumber') ?? '';
+          phonenum.text = snapshot.get('phoneNumber') ?? '';
+        });
+      }
+    } catch (e) {
+      print('Error fetching profile data: $e');
+      // Handle errors here
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose the controllers when the widget is disposed
+    fullname.dispose();
+    accountnum.dispose();
+    phonenum.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         controller: fullname,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Full Name',
+                          // hintText: 'Full Name',
                         ),
                       ),
                     ),
