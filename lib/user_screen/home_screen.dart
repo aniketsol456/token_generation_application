@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                Get.to(ProfilePage());
+                Get.to(() => ProfilePage());
               },
             ),
             // ListTile(

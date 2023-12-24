@@ -29,7 +29,7 @@ class _OtpScreenState extends State<OtpScreen> {
         duration: Duration(seconds: 2),
       );
     } catch (e) {
-      print('This is not a proper otp:$e');
+      print('Wrong Otp.');
     }
   }
 

@@ -23,14 +23,25 @@ class FirebaseOperations {
     return resp;
   }
 
+  static Future<bool> checkUserExists(String mobileno, String Password) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Users')
+        .where('Mobileno', isEqualTo: mobileno)
+        .where('Password', isEqualTo: Password)
+        .get();
+
+    return snapshot.docs.isNotEmpty;
+  }
+
   static Stream<QuerySnapshot> fetchdata() {
-    CollectionReference User = db.collection("transactions");
-    return User.snapshots();
+    CollectionReference Users = db.collection("Users");
+    return Users.snapshots();
   }
 
   static deletedata(String id) {
     String resp = '';
-    DocumentReference docRef = db.collection("transactions").doc(id);
+    DocumentReference docRef = db.collection("Users").doc(id);
     docRef.delete().whenComplete(() {
       resp = 'Userdata deleted successfully';
     });

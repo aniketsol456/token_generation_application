@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:token_generation_application/admin_screen/admin_home_screen.dart';
+import 'package:token_generation_application/services/firbase_option.dart';
 import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/signup_screen.dart';
 
@@ -33,23 +34,72 @@ class _LoginScreenState extends State<LoginScreen> {
   //   );
   // }
 
-  void NavigateToBootomNav() {
+  // void NavigateToBootomNav() {
+  //   setState(() {
+  //     numerrortext =
+  //         (Numcontroller.text.isEmpty) ? "Please enter a Mobile number" : null;
+  //     passerrortext =
+  //         (Passcontroller.text.isEmpty) ? "Please enter a Password" : null;
+  //   });
+  //   if (Numcontroller.text == '9104525299' &&
+  //       Passcontroller.text == 'admin_123') {
+  //     Get.off(
+  //       AdminHomeScreen(),
+  //     );
+  //   } else if (numerrortext == null && passerrortext == null) {
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => HomeScreen()),
+  //     );
+  //   }
+  // }
+
+  void NavigateToBootomNav() async {
     setState(() {
       numerrortext =
           (Numcontroller.text.isEmpty) ? "Please enter a Mobile number" : null;
       passerrortext =
           (Passcontroller.text.isEmpty) ? "Please enter a Password" : null;
     });
-    if (Numcontroller.text == '9104525299' &&
-        Passcontroller.text == 'admin_123') {
-      Get.off(
-        AdminHomeScreen(),
-      );
-    } else if (numerrortext == null && passerrortext == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+
+    if (numerrortext == null && passerrortext == null) {
+      bool isAdmin = (Numcontroller.text == '9104525299' &&
+          Passcontroller.text == 'admin_123');
+
+      if (isAdmin) {
+        // Admin login
+        Get.off(AdminHomeScreen());
+      } else {
+        // User login
+        bool userExists = await FirebaseOperations.checkUserExists(
+            Numcontroller.text, Passcontroller.text);
+
+        if (userExists) {
+          // User exists in the database, navigate to HomeScreen
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => HomeScreen()),
+          // );
+          Get.to(
+            HomeScreen(),
+            curve: Curves.easeInCubic,
+            duration: Duration(seconds: 2),
+          );
+        } else {
+          // User doesn't exist, show a message or navigate to signup page
+          // You can show a snackbar or dialog indicating that the user doesn't exist
+          // or navigate to the signup page
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => SignupScreen()),
+          // );
+          Get.to(
+            SignupScreen(),
+            curve: Curves.easeInCubic,
+            duration: Duration(seconds: 2),
+          );
+        }
+      }
     }
   }
 

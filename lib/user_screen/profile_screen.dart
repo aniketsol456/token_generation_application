@@ -1,50 +1,74 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  // const ProfilePage({super.key});
   const ProfilePage({Key? key}) : super(key: key);
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // TextEditingController fullname = TextEditingController();
-  // TextEditingController accountnum = TextEditingController();
-  // TextEditingController phonenum = TextEditingController();
-  late TextEditingController fullname;
-  late TextEditingController accountnum;
-  late TextEditingController phonenum;
+  TextEditingController fullname = TextEditingController();
+  TextEditingController accountnum = TextEditingController();
+  TextEditingController mobilenum = TextEditingController();
   // late String fullName = '';
   // late String accoutnumber = '';
   // late String phoneNumber = '';
+  // TextEditingController fullname = TextEditingController();
+  // TextEditingController accountnum = TextEditingController();
+  // TextEditingController phonenum = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    fullname = TextEditingController();
-    accountnum = TextEditingController();
-    phonenum = TextEditingController();
     fetchProfileData(); // Fetch data when the page initializes
   }
 
-  void fetchProfileData() async {
-    try {
-      // Access Firestore collection 'profiles' and document with specific ID
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-          .instance
-          .collection('Users')
-          .doc('xPdpuq1Loo8kgY95Triy')
-          .get();
+  // Future<void> fetchProfileData() async {
+  //   try {
+  //     // Access Firestore collection 'Users' and get the documents
+  //     QuerySnapshot<Map<String, dynamic>> querySnapshot =
+  //         await FirebaseFirestore.instance.collection('Users').get();
 
-      if (snapshot.exists) {
-        // Access data from the snapshot and set it to the respective TextFields
-        setState(() {
-          fullname.text = snapshot.get('fullName') ??
-              ''; // Setting retrieved data to the TextField
-          accountnum.text = snapshot.get('accountNumber') ?? '';
-          phonenum.text = snapshot.get('phoneNumber') ?? '';
-        });
+  //     if (querySnapshot.docs.isNotEmpty) {
+  //       // Assume you're fetching the first document found in the collection
+  //       // You can modify this according to your specific logic
+  //       var userData = querySnapshot.docs.first.data();
+
+  //       setState(() {
+  //         fullname.text = userData['Fullname'] ?? '';
+  //         accountnum.text = userData['Accountno'] ?? '';
+  //         mobilenum.text = userData['Mobileno'] ?? '';
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching profile data: $e');
+  //     // Handle errors here
+  //   }
+  // }
+
+  Future<void> fetchProfileData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // Access Firestore collection 'Users' and get the document for the logged-in user
+        DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await FirebaseFirestore.instance
+                .collection('Users')
+                .doc(user.uid) // Assuming user ID is used as the document ID
+                .get();
+
+        if (snapshot.exists) {
+          var userData = snapshot.data();
+
+          setState(() {
+            fullname.text = userData?['Fullname'] ?? '';
+            accountnum.text = userData?['Accountno'] ?? '';
+            mobilenum.text = userData?['Mobileno'] ?? '';
+          });
+        }
       }
     } catch (e) {
       print('Error fetching profile data: $e');
@@ -57,10 +81,11 @@ class _ProfilePageState extends State<ProfilePage> {
     // Dispose the controllers when the widget is disposed
     fullname.dispose();
     accountnum.dispose();
-    phonenum.dispose();
+    mobilenum.dispose();
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -80,68 +105,65 @@ class _ProfilePageState extends State<ProfilePage> {
                 Icons.person,
                 size: 150,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: fullname,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          // hintText: 'Full Name',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              SizedBox(
+                height: 20,
               ),
-              SizedBox(height: 20.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: phonenum,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Phone number',
-                        ),
-                      ),
-                    ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 4,
                   ),
-                ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextField(
+                  controller: fullname,
+                  decoration: InputDecoration(
+                    hintText: 'Fullname',
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        controller: accountnum,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Account Number',
-                        ),
-                      ),
-                    ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 4,
                   ),
-                ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextField(
+                  controller: mobilenum,
+                  decoration: InputDecoration(
+                    hintText: 'Mobileno',
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 4,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextField(
+                  controller: accountnum,
+                  decoration: InputDecoration(
+                    hintText: 'Accountno',
+                  ),
+                ),
               ),
             ],
           ),

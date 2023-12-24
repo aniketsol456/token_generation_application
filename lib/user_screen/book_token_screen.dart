@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:token_generation_application/services/token_option.dart';
+
+// import '../services/firbase_option.dart';
 
 class BookTokenScreen extends StatefulWidget {
   BookTokenScreen({super.key});
@@ -129,22 +132,108 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                 SizedBox(
                   height: 20,
                 ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.orange,
+                //   ),
+                //   onPressed: () {
+                //     // Perform the submit action here
+                //     if (selectedDate != null && selectedTime != null) {
+                //       String formattedDate =
+                //           '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
+                //       String formattedTime =
+                //           '${selectedTime!.hour}:${selectedTime!.minute}';
+
+                //       // You can use the selectedDate, selectedTime, and descriptionController.text for further processing
+                //       print('Selected Date: $formattedDate');
+                //       print('Selected Time: $formattedTime');
+                //       print('Description: ${descriptionController.text}');
+                //     } else {
+                //       // Show a message if date or time is not selected
+                //       showDialog(
+                //         context: context,
+                //         builder: (BuildContext context) {
+                //           return AlertDialog(
+                //             title: Text('Error'),
+                //             content: Text('Please select date and time.'),
+                //             actions: [
+                //               TextButton(
+                //                 onPressed: () {
+                //                   Navigator.of(context).pop();
+                //                 },
+                //                 child: Text('OK'),
+                //               ),
+                //             ],
+                //           );
+                //         },
+                //       );
+                //     }
+                //   },
+                //   child: Text(
+                //     'Submit',
+                //     style: TextStyle(
+                //       color: Colors.black,
+                //       fontSize: 15,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
                   ),
-                  onPressed: () {
-                    // Perform the submit action here
+                  onPressed: () async {
                     if (selectedDate != null && selectedTime != null) {
                       String formattedDate =
                           '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
                       String formattedTime =
                           '${selectedTime!.hour}:${selectedTime!.minute}';
+                      String description = descriptionController.text;
 
-                      // You can use the selectedDate, selectedTime, and descriptionController.text for further processing
-                      print('Selected Date: $formattedDate');
-                      print('Selected Time: $formattedTime');
-                      print('Description: ${descriptionController.text}');
+                      // Call the FirebaseOperations.tokendetail method to store token details in Firestore
+                      String response = await FirebaseOperations.tokendetail(
+                          description, formattedDate, formattedTime);
+
+                      if (response == 'Users token added successfully') {
+                        // Show a success message if the token data is stored successfully
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Success'),
+                              content: Text('Token booked successfully.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        // Show an error message if there was an issue storing the token data
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: Text(
+                                  'Failed to book token. Please try again.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     } else {
                       // Show a message if date or time is not selected
                       showDialog(
