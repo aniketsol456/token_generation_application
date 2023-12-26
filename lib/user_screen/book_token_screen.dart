@@ -22,7 +22,6 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime(DateTime.now().year + 5),
     );
-
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {
         selectedDate = pickedDate;
@@ -37,7 +36,6 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
-
     if (pickedTime != null && pickedTime != selectedTime) {
       setState(() {
         selectedTime = pickedTime;
@@ -58,6 +56,8 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: Text('Token Booking'),
         centerTitle: true,
         leading: IconButton(
@@ -70,7 +70,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
       body: Center(
         child: Container(
           width: 300,
-          height: 450,
+          height: 370,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
@@ -93,7 +93,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 TextField(
                   controller: dateController,
@@ -106,7 +106,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 TextField(
                   controller: timeController,
@@ -118,17 +118,17 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                     suffixIcon: Icon(Icons.access_time),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 TextField(
                   controller: descriptionController,
                   decoration: InputDecoration(
                     labelText: 'Brief Description',
                     border: OutlineInputBorder(),
                   ),
-                  maxLines: 3,
+                  maxLines: 2,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 // ElevatedButton(
                 //   style: ElevatedButton.styleFrom(
