@@ -4,12 +4,12 @@ import 'package:token_generation_application/services/token_option.dart';
 
 // Define Token class
 class Token {
-  final String Description;
+  final String description;
   final String Date;
   final String Time;
 
   Token({
-    required this.Description,
+    required this.description,
     required this.Date,
     required this.Time,
   });
@@ -41,7 +41,7 @@ class _AdminTokenDetailScreenState extends State<AdminTokenDetailScreen> {
       tokenStream.listen((QuerySnapshot snapshot) {
         List<Token> fetchedTokens = snapshot.docs.map((doc) {
           return Token(
-            Description: doc['Description'] ?? '',
+            description: doc['Description'] ?? '',
             Date: doc['Date'] ?? '',
             Time: doc['Time'] ?? '',
           );
@@ -73,7 +73,7 @@ class _AdminTokenDetailScreenState extends State<AdminTokenDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Date: ${token.Date}'),
-                      Text('Description: ${token.Description}'),
+                      Text('Description: ${token.description}'),
                       Text('Time: ${token.Time}'),
                     ],
                   ),
