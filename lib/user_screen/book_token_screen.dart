@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:token_generation_application/services/token_option.dart';
 
-// import '../services/firbase_option.dart';
-
 class BookTokenScreen extends StatefulWidget {
   BookTokenScreen({super.key});
 
@@ -72,7 +70,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
       body: Center(
         child: Container(
           width: 300,
-          height: 500,
+          height: 450,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(

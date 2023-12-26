@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-// import 'package:token_generation_application/user_screen/home_screen.dart';
 import 'package:token_generation_application/user_screen/splash_screen.dart';
 import 'firebase_options.dart';
 
