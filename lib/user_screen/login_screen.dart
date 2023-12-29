@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,21 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showPassword = true;
   String? numerrortext;
   String? passerrortext;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Check login status from SharedPreferences
+    SharedPreferences.getInstance().then((prefs) async {
+      bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+      print('islogin:$isLoggedIn');
+      if (isLoggedIn) {
+        // If already logged in, directly navigate to HomeScreen
+        Get.off(HomeScreen());
+      }
+    });
+  }
 
   void NavigateToSignup() {
     Navigator.pushReplacement(
@@ -115,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Check login status from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-
+      print('islogin:$isLoggedIn');
       if (isLoggedIn) {
         // If already logged in, directly navigate to HomeScreen
         Get.off(HomeScreen());
@@ -135,12 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (numerrortext == null && passerrortext == null) {
-      bool userExists = await FirebaseOperations.checkUserExists(
+      String userExists = await FirebaseOperations.checkUserExists(
           Numcontroller.text, Passcontroller.text);
 
-      if (userExists) {
+      if (userExists.isNotEmpty) {
         // User exists in the database, navigate to HomeScreen
-        saveLoginStatus(true); // Save login status
+        saveLoginStatus(true, userExists); // Save login status
         Get.off(HomeScreen());
       } else {
         // User doesn't exist, navigate to signup page
@@ -149,9 +165,10 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> saveLoginStatus(bool isLoggedIn) async {
+  Future<void> saveLoginStatus(bool isLoggedIn, String userExists) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', isLoggedIn);
+    await prefs.setString('uid', userExists);
   }
 
   void ToshowPassword() {

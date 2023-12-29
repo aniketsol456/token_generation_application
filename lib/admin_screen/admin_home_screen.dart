@@ -153,11 +153,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ),
               onTap: () {
-                Get.off(
-                  LoginScreen(),
-                  curve: Curves.easeInBack,
-                  duration: Duration(seconds: 5),
-                );
                 _showLogoutConfirmationDialog(); // Show the logout confirmation dialog
               },
             ),

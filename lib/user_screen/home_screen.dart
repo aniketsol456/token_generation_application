@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:token_generation_application/user_screen/token_status.dart';
 import 'package:token_generation_application/user_screen/book_token_screen.dart';
 import 'package:token_generation_application/user_screen/login_screen.dart';
@@ -47,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.clear();
                 Navigator.of(context).pop(); // Close the dialog
                 // Perform logout actions here, such as clearing user session, etc.
                 Navigator.pushAndRemoveUntil(
@@ -152,11 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                Get.off(
-                  LoginScreen(),
-                  curve: Curves.easeInBack,
-                  duration: Duration(seconds: 5),
-                );
+                // Get.off(
+                //   LoginScreen(),
+                //   curve: Curves.easeInBack,
+                //   duration: Duration(seconds: 5),
+                // );
+
                 _showLogoutConfirmationDialog(); // Show the logout confirmation dialog
               },
             ),

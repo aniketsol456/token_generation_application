@@ -22,7 +22,8 @@ class FirebaseOperations {
     return resp;
   }
 
-  static Future<bool> checkUserExists(String mobileno, String Password) async {
+  static Future<String> checkUserExists(
+      String mobileno, String Password) async {
     QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
         .collection('Users')
@@ -30,7 +31,7 @@ class FirebaseOperations {
         .where('Password', isEqualTo: Password)
         .get();
 
-    return snapshot.docs.isNotEmpty;
+    return snapshot.docs.first.id;
   }
 
   static Stream<QuerySnapshot> fetchdata() {

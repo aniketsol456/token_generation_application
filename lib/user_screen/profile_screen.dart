@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -51,13 +52,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> fetchProfileData() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      // User? user = FirebaseAuth.instance.currentUser;
+      String user = prefs.getString("uid") ?? "";
+      if (user != "") {
         // Access Firestore collection 'Users' and get the document for the logged-in user
         DocumentSnapshot<Map<String, dynamic>> snapshot =
             await FirebaseFirestore.instance
                 .collection('Users')
-                .doc(user.uid) // Assuming user ID is used as the document ID
+                .doc(user) // Assuming user ID is used as the document ID
                 .get();
 
         if (snapshot.exists) {
@@ -69,6 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
             mobilenum.text = userData?['Mobileno'] ?? '';
           });
         }
+      } else {
+        print('null called');
       }
     } catch (e) {
       print('Error fetching profile data: $e');
