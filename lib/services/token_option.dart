@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 var db = FirebaseFirestore.instance;
 
@@ -7,7 +8,11 @@ class FirebaseOperations {
   static Future<String> tokendetail(
       String description, String Date, String Time) async {
     try {
+      QuerySnapshot querySnapshot = await db.collection('TokenDetails').get();
+      int tokenCount = querySnapshot.docs.length + 1;
+
       final token = <String, dynamic>{
+        "Token Number": tokenCount,
         "Date": Date,
         "Time": Time,
         "Description": description,

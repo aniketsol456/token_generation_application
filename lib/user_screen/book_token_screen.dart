@@ -182,7 +182,11 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Success'),
-                              content: Text('Token booked successfully.'),
+                              content: Column(
+                                children: [
+                                  Text('Token booked successfully.'),
+                                ],
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {
