@@ -4,22 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 var db = FirebaseFirestore.instance;
 
 class FirebaseOperations {
-  // static tokendetail(String description, String Date, String Time) {
-  //   String resp = '';
-  //   final tokens = <String, dynamic>{
-  //     "Date": Date,
-  //     "Time": Time,
-  //     "Description": description,
-  //     // "tr_dt": DateTime.now().toString(),
-  //   };
-  //   db.collection("TokenDetails").add(tokens).whenComplete(() {
-  //     resp = 'Users token added successfully';
-  //   });
-  //   //     .catchError((e) {
-  //   //   resp = e.toString();
-  //   // });
-  //   return resp;
-  // }
   static Future<String> tokendetail(
       String description, String Date, String Time) async {
     try {
