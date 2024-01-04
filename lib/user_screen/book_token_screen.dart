@@ -14,6 +14,17 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  String? selectedOption;
+
+  List<String> description = [
+    'Passbook Print',
+    'Money Withdraw',
+    'Money Deposit',
+    'Loan Inquiry',
+    'Account closing',
+    'ATM query',
+    'Pansion purpose'
+  ];
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -70,7 +81,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
       body: Center(
         child: Container(
           width: 300,
-          height: 370,
+          height: 350,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
@@ -93,7 +104,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 TextField(
                   controller: dateController,
@@ -119,63 +130,35 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-                TextField(
-                  controller: descriptionController,
+                // TextField(
+                //   controller: descriptionController,
+                //   decoration: InputDecoration(
+                //     labelText: 'Brief Description',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   maxLines: 2,
+                // ),
+                DropdownButtonFormField<String>(
+                  value: selectedOption,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedOption = newValue;
+                    });
+                  },
+                  items: description.map((String option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(option),
+                    );
+                  }).toList(),
                   decoration: InputDecoration(
-                    labelText: 'Brief Description',
+                    labelText: 'Select Option',
                     border: OutlineInputBorder(),
                   ),
-                  maxLines: 2,
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.orange,
-                //   ),
-                //   onPressed: () {
-                //     // Perform the submit action here
-                //     if (selectedDate != null && selectedTime != null) {
-                //       String formattedDate =
-                //           '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
-                //       String formattedTime =
-                //           '${selectedTime!.hour}:${selectedTime!.minute}';
-
-                //       // You can use the selectedDate, selectedTime, and descriptionController.text for further processing
-                //       print('Selected Date: $formattedDate');
-                //       print('Selected Time: $formattedTime');
-                //       print('Description: ${descriptionController.text}');
-                //     } else {
-                //       // Show a message if date or time is not selected
-                //       showDialog(
-                //         context: context,
-                //         builder: (BuildContext context) {
-                //           return AlertDialog(
-                //             title: Text('Error'),
-                //             content: Text('Please select date and time.'),
-                //             actions: [
-                //               TextButton(
-                //                 onPressed: () {
-                //                   Navigator.of(context).pop();
-                //                 },
-                //                 child: Text('OK'),
-                //               ),
-                //             ],
-                //           );
-                //         },
-                //       );
-                //     }
-                //   },
-                //   child: Text(
-                //     'Submit',
-                //     style: TextStyle(
-                //       color: Colors.black,
-                //       fontSize: 15,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
@@ -186,7 +169,7 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                           '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
                       String formattedTime =
                           '${selectedTime!.hour}:${selectedTime!.minute}';
-                      String description = descriptionController.text;
+                      String description = selectedOption ?? '';
 
                       // Call the FirebaseOperations.tokendetail method to store token details in Firestore
                       String response = await FirebaseOperations.tokendetail(
