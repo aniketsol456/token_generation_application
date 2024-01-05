@@ -8,12 +8,14 @@ class FirebaseOperations {
     try {
       QuerySnapshot querySnapshot = await db.collection('TokenDetails').get();
       int tokenCount = querySnapshot.docs.length + 1;
+      String waitingTime = await calculateWaitingTime(Date, Time);
 
       final token = <String, dynamic>{
         "Token Number": tokenCount,
         "Date": Date,
         "Time": Time,
         "Description": description,
+        "Waiting Time": waitingTime,
         "tr_dt": DateTime.now().toString(),
       };
 
@@ -23,6 +25,34 @@ class FirebaseOperations {
     } catch (e) {
       print('Error adding token: $e');
       return 'Failed to add token';
+    }
+  }
+
+  static Future<String> calculateWaitingTime(
+      String currentDate, String currentTime) async {
+    QuerySnapshot querySnapshot = await db
+        .collection('TokenDetails')
+        .orderBy("tr_dt", descending: true)
+        .limit(2)
+        .get();
+
+    if (querySnapshot.docs.length >= 2) {
+      String previousTokenTime = querySnapshot.docs[1].get('tr_dt');
+
+      DateTime currentDateTime = DateTime.parse('$currentDate $currentTime');
+      DateTime previousDateTime = DateTime.parse(previousTokenTime);
+
+      int diffInSeconds =
+          currentDateTime.difference(previousDateTime).inSeconds;
+      int waitingTime =
+          diffInSeconds >= 900 ? 1200 : 900; // 15 mins or 20 mins in seconds
+
+      int minutes = waitingTime ~/ 60;
+      int seconds = waitingTime % 60;
+
+      return '$minutes minutes $seconds seconds';
+    } else {
+      return 'Waiting time calculation not available';
     }
   }
 

@@ -185,6 +185,8 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                         // Show a success message if the token data is stored successfully
                         int tokenNumber =
                             querySnapshot.docs.first.get('Token Number') as int;
+                        String approxtime = querySnapshot.docs.first
+                            .get('Waiting Time') as String;
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -195,7 +197,8 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('Token booked successfully.'),
-                                  Text('Token Number : $tokenNumber')
+                                  Text('Token Number : $tokenNumber'),
+                                  Text('Approximate Time: $approxtime'),
                                 ],
                               ),
                               actions: [
