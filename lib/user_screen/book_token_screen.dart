@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:token_generation_application/services/token_option.dart';
 
@@ -176,15 +177,25 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                           description, formattedDate, formattedTime);
 
                       if (response == 'Users token added successfully') {
+                        QuerySnapshot querySnapshot = await db
+                            .collection('TokenDetails')
+                            .orderBy("tr_dt", descending: true)
+                            .limit(1)
+                            .get();
                         // Show a success message if the token data is stored successfully
+                        int tokenNumber =
+                            querySnapshot.docs.first.get('Token Number') as int;
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Success'),
                               content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('Token booked successfully.'),
+                                  Text('Token Number : $tokenNumber')
                                 ],
                               ),
                               actions: [
