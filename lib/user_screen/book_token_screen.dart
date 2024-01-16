@@ -43,17 +43,25 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
     }
   }
 
+  // Future<void> _selectTime(BuildContext context) async {
+  //   final TimeOfDay? pickedTime = await showTimePicker(
+  //     context: context,
+  //     initialTime:
+  //         TimeOfDay.now(), // This sets the initial time to the current time
+  //   );
+  //   if (pickedTime != null && pickedTime != selectedTime) {
+  //     setState(() {
+  //       selectedTime = pickedTime;
+  //       timeController.text = '${pickedTime.hour}:${pickedTime.minute}';
+  //     });
+  //   }
+  // }
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (pickedTime != null && pickedTime != selectedTime) {
-      setState(() {
-        selectedTime = pickedTime;
-        timeController.text = '${pickedTime.hour}:${pickedTime.minute}';
-      });
-    }
+    setState(() {
+      final DateTime currentTime = DateTime.now();
+      selectedTime = TimeOfDay.fromDateTime(currentTime);
+      timeController.text = '${currentTime.hour}:${currentTime.minute}';
+    });
   }
 
   @override
@@ -168,8 +176,10 @@ class _BookTokenScreenState extends State<BookTokenScreen> {
                     if (selectedDate != null && selectedTime != null) {
                       String formattedDate =
                           '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}';
+                      // String formattedTime =
+                      //     '${selectedTime!.hour}:${selectedTime!.minute}';
                       String formattedTime =
-                          '${selectedTime!.hour}:${selectedTime!.minute}';
+                          '${DateTime.now().hour}:${DateTime.now().minute}';
                       String description = selectedOption ?? '';
 
                       // Call the FirebaseOperations.tokendetail method to store token details in Firestore
